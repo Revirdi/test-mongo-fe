@@ -84,7 +84,7 @@ function Home(props) {
                 width="50px"
                 height="40px"
               />
-              <Text>{`${props.user.username}`}</Text>
+              <Text>{`@${props.user.username}`}</Text>
             </HStack>
             <Button onClick={onLogoutClick} variant="ghost" w="100%">
               Logout
