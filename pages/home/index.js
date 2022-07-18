@@ -13,31 +13,32 @@ import {
 import { signOut, getSession } from "next-auth/react";
 import { api_origin } from "../../constraint";
 import axiosInstance from "../../services/axios";
+import Post from "../../components/Post";
 
 function Home(props) {
   const [post, setPost] = useState(props.post);
 
   useEffect(() => {
+    const getPost = async () => {
+      const res = await axiosInstance.get("/posts/timeline/all");
+      setPost(res.data.data);
+    };
     getPost();
   }, []);
 
-  const getPost = async () => {
-    const res = await axiosInstance.get("/posts/timeline/all");
-    setPost(res.data.data);
-  };
   const renderPost = () => {
     return post.map((pst) => {
       return (
-        <div key={pst._id}>
-          <Text>{pst.desc}</Text>
-          <Text>{pst.postedBy.username}</Text>
-          <Text>{pst.likes.length}</Text>
-          <Text>{pst.comments.length}</Text>
-        </div>
+        <Post key={pst._id} post={pst} user={props.user}></Post>
+        // <div key={pst._id}>
+        //   <Text>{pst.desc}</Text>
+        //   <Text>{pst.postedBy.username}</Text>
+        //   <Text>{pst.likes.length}</Text>
+        //   <Text>{pst.comments.length}</Text>
+        // </div>
       );
     });
   };
-  console.log(typeof post);
 
   const onLogoutClick = async () => {
     await signOut();
