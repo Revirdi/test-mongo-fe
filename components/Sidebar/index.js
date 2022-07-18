@@ -19,7 +19,11 @@ function Sidebar() {
       mt="10px"
       paddingStart="20px"
       paddingEnd="20px"
-      borderRight="1px solid var(--twitter-background)"
+      position={"fixed"}
+      zIndex="banner"
+      overflow="hidden"
+      left={6}
+      top={2}
     >
       {/* Twitter Icon */}
       <Icon

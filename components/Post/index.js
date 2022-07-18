@@ -1,7 +1,17 @@
 import { useState, useEffect } from "react";
-import { Box, Text, Button } from "@chakra-ui/react";
+import {
+  Box,
+  Text,
+  Button,
+  Image,
+  Flex,
+  IconButton,
+  Icon,
+} from "@chakra-ui/react";
 import axiosInstance from "../../services/axios";
 import { getSession } from "next-auth/react";
+import { api_origin } from "../../constraint";
+import { BsHeart, BsHeartFill } from "react-icons/bs";
 import axios from "axios";
 useState;
 
@@ -41,14 +51,50 @@ export default function Post(props) {
     setIsLiked(!isLiked);
   };
   return (
-    <Box bgColor={"red.300"} marginBottom={2} width="500px">
-      <Text>{props.post.postedBy.username}</Text>
+    <Box
+      rounded={5}
+      boxShadow="md"
+      marginBottom={2}
+      padding="2"
+      marginInlineStart={"52"}
+    >
+      <Flex>
+        <Image
+          src={api_origin + props.post.postedBy.profilePicture}
+          height="45px"
+          rounded={"full"}
+        ></Image>
+        <Text marginStart={4} marginTop={2}>
+          {props.post.postedBy.username}
+        </Text>
+      </Flex>
+      {props.post.postImage && (
+        <Image
+          src={api_origin + props.post.postImage}
+          maxH="500px"
+          minWidth={"100%"}
+        ></Image>
+      )}
       <Text>{props.post.desc}</Text>
-      <Text>{likes}</Text>
-      <Text>{props.post.comments.length}</Text>
-      <Button margin={2} onClick={onLikeHandler}>
+      <Flex flexDirection={"row"}>
+        {isLiked ? (
+          <IconButton
+            variant={"unstyled"}
+            color="red.400"
+            icon={<Icon as={BsHeartFill} onClick={onLikeHandler} />}
+          ></IconButton>
+        ) : (
+          <IconButton
+            variant={"unstyled"}
+            icon={<Icon as={BsHeart} onClick={onLikeHandler} />}
+          ></IconButton>
+        )}
+        <Text marginTop={1.5}>{likes}</Text>
+      </Flex>
+
+      {/* <Button margin={2} onClick={onLikeHandler}>
         Like
-      </Button>
+      </Button> */}
     </Box>
   );
 }
