@@ -21,8 +21,8 @@ export default function Post(props) {
     props.post.likes.includes(props.user._id)
   );
   const [user, setUser] = useState("");
-  console.log(props.post.likes.includes(props.user._id));
 
+  // console.log(props.post.likes.includes(props.user._id));
   // useEffect(() => {
   //   setIsLiked(props.post.likes.includes(props.user.userId));
   // }, [(props.user.userId, props.post.likes)]);
@@ -39,7 +39,7 @@ export default function Post(props) {
       setUser(res.data.data);
     };
     fetchUser();
-  }, [props.user.userId]);
+  }, [props.user._id]);
 
   const onLikeHandler = async () => {
     try {
