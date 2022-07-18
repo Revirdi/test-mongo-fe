@@ -27,24 +27,24 @@ export default function Post(props) {
   //   setIsLiked(props.post.likes.includes(props.user.userId));
   // }, [(props.user.userId, props.post.likes)]);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const session = await getSession();
-      const { accessToken } = session.user;
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     const session = await getSession();
+  //     const { accessToken } = session.user;
 
-      const config = {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      };
-      const res = await axiosInstance.get(`/users/profile`, config);
-      setUser(res.data.data);
-    };
-    fetchUser();
-  }, [props.user._id]);
+  //     const config = {
+  //       headers: { Authorization: `Bearer ${accessToken}` },
+  //     };
+  //     const res = await axiosInstance.get(`/users/profile`, config);
+  //     setUser(res.data.data);
+  //   };
+  //   fetchUser();
+  // }, [props.user._id]);
 
   const onLikeHandler = async () => {
     try {
       await axiosInstance.put(`/posts/${props.post._id}`, {
-        userId: user._id,
+        userId: props.user._id,
       });
     } catch (error) {}
     setLikes(isLiked ? likes - 1 : likes + 1);
