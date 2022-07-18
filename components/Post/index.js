@@ -1,26 +1,17 @@
-import { useState, useEffect } from "react";
-import {
-  Box,
-  Text,
-  Button,
-  Image,
-  Flex,
-  IconButton,
-  Icon,
-} from "@chakra-ui/react";
+import { useState } from "react";
+import { Box, Text, Image, Flex, IconButton, Icon } from "@chakra-ui/react";
 import axiosInstance from "../../services/axios";
-import { getSession } from "next-auth/react";
+// import { getSession } from "next-auth/react";
 import { api_origin } from "../../constraint";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
-import axios from "axios";
-useState;
 
 export default function Post(props) {
   const [likes, setLikes] = useState(props.post.likes.length);
   const [isLiked, setIsLiked] = useState(
     props.post.likes.includes(props.user._id)
   );
-  const [user, setUser] = useState("");
+
+  // const [user, setUser] = useState("");
 
   // console.log(props.post.likes.includes(props.user._id));
   // useEffect(() => {
@@ -91,10 +82,6 @@ export default function Post(props) {
         )}
         <Text marginTop={1.5}>{likes}</Text>
       </Flex>
-
-      {/* <Button margin={2} onClick={onLikeHandler}>
-        Like
-      </Button> */}
     </Box>
   );
 }
