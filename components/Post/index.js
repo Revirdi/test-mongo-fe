@@ -1,5 +1,14 @@
 import { useState } from "react";
-import { Box, Text, Image, Flex, IconButton, Icon } from "@chakra-ui/react";
+import {
+  Box,
+  Text,
+  Image,
+  Flex,
+  IconButton,
+  Icon,
+  Spacer,
+  Button,
+} from "@chakra-ui/react";
 import axiosInstance from "../../services/axios";
 // import { getSession } from "next-auth/react";
 import { api_origin } from "../../constraint";
@@ -47,7 +56,7 @@ export default function Post(props) {
       boxShadow="md"
       marginBottom={2}
       padding="2"
-      marginInlineStart={"52"}
+      marginInlineStart={"25%"}
     >
       <Flex>
         <Image
@@ -58,6 +67,12 @@ export default function Post(props) {
         <Text marginStart={4} marginTop={2}>
           {props.post.postedBy.username}
         </Text>
+        {props.post.postedBy._id === props.user._id && (
+          <>
+            <Spacer />
+            <Button>Edit</Button>
+          </>
+        )}
       </Flex>
       {props.post.postImage && (
         <Image
@@ -72,11 +87,21 @@ export default function Post(props) {
           <IconButton
             variant={"unstyled"}
             color="red.400"
+            _hover={{
+              background: "#e8f5fe",
+              color: "red.400",
+              rounded: "full",
+            }}
             icon={<Icon as={BsHeartFill} onClick={onLikeHandler} />}
           ></IconButton>
         ) : (
           <IconButton
             variant={"unstyled"}
+            _hover={{
+              background: "#e8f5fe",
+              color: "red.400",
+              borderRadius: "25px",
+            }}
             icon={<Icon as={BsHeart} onClick={onLikeHandler} />}
           ></IconButton>
         )}

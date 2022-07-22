@@ -20,7 +20,6 @@ function Sidebar() {
       paddingStart="20px"
       paddingEnd="20px"
       position={"fixed"}
-      zIndex="banner"
       overflow="hidden"
       left={6}
       top={2}

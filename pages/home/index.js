@@ -17,6 +17,7 @@ import Post from "../../components/Post";
 
 function Home(props) {
   const [post, setPost] = useState(props.post);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getPost = async () => {
@@ -25,6 +26,17 @@ function Home(props) {
     };
     getPost();
   }, []);
+
+  const resendHandler = async () => {
+    setIsLoading(!isLoading);
+    const body = {
+      email: props.user.email,
+      userId: props.user._id,
+    };
+    await axiosInstance.post("/auth/verify", body);
+    alert("Success sending email");
+    setIsLoading(false);
+  };
 
   const renderPost = () => {
     return post.map((pst) => {
@@ -49,13 +61,19 @@ function Home(props) {
         {!props.user.isVerified && (
           <HStack paddingBlock="1" paddingInline="6">
             <Text>Click to resend a verification and check your email</Text>
-            <Button backgroundColor={"yellow.300"}>Resend</Button>
+            <Button
+              isLoading={isLoading}
+              backgroundColor={"yellow.300"}
+              onClick={resendHandler}
+            >
+              Resend
+            </Button>
           </HStack>
         )}
       </Box>
       <Flex
         height="100vh"
-        width="1300px"
+        width="full"
         maxWidth="100vw"
         ms="auto"
         me="auto"
@@ -69,7 +87,7 @@ function Home(props) {
 
         <Sidebar />
 
-        <Flex flexGrow={"0.4"} flexDirection="column" marginInline={2}>
+        <Flex flexGrow={"0.4"} w="70%" flexDirection="column" marginInline={2}>
           {renderPost()}
         </Flex>
         <Flex minWidth={"20vw"} marginLeft={6}>
@@ -99,6 +117,7 @@ function Home(props) {
 export async function getServerSideProps(context) {
   try {
     const session = await getSession({ req: context.req });
+    // console.log(session.error);
 
     if (!session) return { redirect: { destination: "/login" } };
 
@@ -116,6 +135,7 @@ export async function getServerSideProps(context) {
     };
   } catch (error) {
     console.error(error.response.data);
+
     return { props: {} };
   }
 }
