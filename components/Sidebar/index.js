@@ -10,8 +10,8 @@ import {
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { IoMailOutline } from "react-icons/io5";
 import SidebarOption from "./SidebarOption";
-import { Flex } from "@chakra-ui/react";
-import { Box } from "@chakra-ui/react";
+import { Box, Link } from "@chakra-ui/react";
+import NextLink from "next/link";
 function Sidebar() {
   return (
     <Box
@@ -34,13 +34,21 @@ function Sidebar() {
       />
 
       {/* Sidebar Option */}
-      <SidebarOption Icon={BsFillHouseDoorFill} text="Home" />
+      <NextLink href="/home" passHref>
+        <Link style={{ textDecoration: "none" }}>
+          <SidebarOption Icon={BsFillHouseDoorFill} text="Home" />
+        </Link>
+      </NextLink>
       <SidebarOption Icon={BsHash} text="Explore" />
       <SidebarOption Icon={IoIosNotificationsOutline} text="Notification" />
       <SidebarOption Icon={IoMailOutline} text="Messages" />
       <SidebarOption Icon={BsBookmark} text="Bookmarks" />
       <SidebarOption Icon={BsList} text="List" />
-      <SidebarOption Icon={BsFillHouseDoorFill} text="Profile" />
+      <NextLink href="/profile" passHref>
+        <Link style={{ textDecoration: "none" }}>
+          <SidebarOption Icon={BsFillHouseDoorFill} text="Profile" />
+        </Link>
+      </NextLink>
       <SidebarOption Icon={BsFillHouseDoorFill} text="More" />
 
       {/* Button -> Tweet */}

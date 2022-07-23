@@ -1,31 +1,23 @@
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
-import {
-  Flex,
-  Button,
-  Box,
-  Text,
-  HStack,
-  Image,
-  VStack,
-} from "@chakra-ui/react";
-import { signOut, getSession } from "next-auth/react";
-import { api_origin } from "../../constraint";
+import { Flex, Button, Box, Text, HStack, VStack } from "@chakra-ui/react";
+import { getSession } from "next-auth/react";
 import axiosInstance from "../../services/axios";
 import Post from "../../components/Post";
+import ProfileBox from "../../components/ProfileBox";
 
 function Home(props) {
   const [post, setPost] = useState(props.post);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const getPost = async () => {
-      const res = await axiosInstance.get("/posts/timeline/all");
-      setPost(res.data.data);
-    };
     getPost();
   }, []);
+  const getPost = async () => {
+    const res = await axiosInstance.get("/posts/timeline/all");
+    setPost(res.data.data);
+  };
 
   const resendHandler = async () => {
     setIsLoading(!isLoading);
@@ -40,21 +32,10 @@ function Home(props) {
 
   const renderPost = () => {
     return post.map((pst) => {
-      return (
-        <Post key={pst._id} post={pst} user={props.user}></Post>
-        // <div key={pst._id}>
-        //   <Text>{pst.desc}</Text>
-        //   <Text>{pst.postedBy.username}</Text>
-        //   <Text>{pst.likes.length}</Text>
-        //   <Text>{pst.comments.length}</Text>
-        // </div>
-      );
+      return <Post key={pst._id} post={pst} user={props.user}></Post>;
     });
   };
 
-  const onLogoutClick = async () => {
-    await signOut();
-  };
   return (
     <VStack>
       <Box backgroundColor={"gray.100"} mt="2" rounded="12">
@@ -90,25 +71,7 @@ function Home(props) {
         <Flex flexGrow={"0.4"} w="70%" flexDirection="column" marginInline={2}>
           {renderPost()}
         </Flex>
-        <Flex minWidth={"20vw"} marginLeft={6}>
-          <Box position={"fixed"} top={2}>
-            <HStack mb={2}>
-              <Image
-                marginTop={2}
-                rounded="full"
-                alt={"Login Image"}
-                objectFit={"cover"}
-                src={api_origin + props.user.profilePicture}
-                width="50px"
-                height="40px"
-              />
-              <Text>{`@${props.user.username}`}</Text>
-            </HStack>
-            <Button onClick={onLogoutClick} variant="ghost" w="100%">
-              Logout
-            </Button>
-          </Box>
-        </Flex>
+        <ProfileBox user={props.user} />
       </Flex>
     </VStack>
   );
@@ -117,7 +80,6 @@ function Home(props) {
 export async function getServerSideProps(context) {
   try {
     const session = await getSession({ req: context.req });
-    // console.log(session.error);
 
     if (!session) return { redirect: { destination: "/login" } };
 
