@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getSession, signOut } from "next-auth/react";
 import Head from "next/head";
 import axiosInstance from "../../services/axios";
@@ -36,6 +36,22 @@ export default function Profile(props) {
     setIsLoading(false);
   };
 
+  // useEffect(() => {
+  //   getUser();
+  // }, []);
+
+  // const getUser = async () => {
+  //   try {
+  //     const session = await getSession();
+  //     const { accessToken } = session.user;
+  //     const config = {
+  //       headers: { Authorization: `Bearer ${accessToken}` },
+  //     };
+
+  //     const res = await axiosInstance.get("/users/profile", config);
+  //     setUser(res.data.data);
+  //   } catch (error) {}
+  // };
   const onSaveProfileUpdate = async () => {
     try {
       const session = await getSession();
@@ -73,7 +89,8 @@ export default function Profile(props) {
         headers: { Authorization: `Bearer ${accessToken}` },
       };
       const res = await axiosInstance.patch("/users/avatar", body, config);
-      alert(res.data.message);
+      console.log(res.data.result);
+      setUser(res.data.result);
     } catch (error) {
       console.log({ Error });
       alert(error.response.data.message);
