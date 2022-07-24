@@ -52,6 +52,7 @@ export default function PostBox(props) {
           rounded="full"
         />
         <Textarea
+          // maxLength="10"
           variant="unstyled"
           width="90%"
           marginStart={4}
