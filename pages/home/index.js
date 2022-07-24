@@ -6,6 +6,7 @@ import { getSession } from "next-auth/react";
 import axiosInstance from "../../services/axios";
 import Post from "../../components/Post";
 import ProfileBox from "../../components/ProfileBox";
+import PostBox from "../../components/PostBox";
 
 function Home(props) {
   const [post, setPost] = useState(props.post);
@@ -69,6 +70,7 @@ function Home(props) {
         <Sidebar />
 
         <Flex flexGrow={"0.4"} w="70%" flexDirection="column" marginInline={2}>
+          <PostBox user={props.user} />
           {renderPost()}
         </Flex>
         <ProfileBox user={props.user} />

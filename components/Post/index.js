@@ -62,10 +62,12 @@ export default function Post(props) {
         <Image
           src={api_origin + props.post.postedBy.profilePicture}
           height="45px"
+          width="45px"
           rounded={"full"}
+          marginBottom={2}
         ></Image>
-        <Text marginStart={4} marginTop={2}>
-          {props.post.postedBy.username}
+        <Text marginStart={3} marginTop={2} fontSize="xl">
+          @{props.post.postedBy.username}
         </Text>
         {props.post.postedBy._id === props.user._id && (
           <>
@@ -74,17 +76,24 @@ export default function Post(props) {
           </>
         )}
       </Flex>
+      <Text marginStart={12} marginBottom={2}>
+        {props.post.desc}
+      </Text>
       {props.post.postImage && (
         <Image
+          marginStart={12}
+          rounded="10"
           src={api_origin + props.post.postImage}
-          maxH="500px"
-          minWidth={"100%"}
+          maxHeight="400px"
+          width="90%"
         ></Image>
       )}
-      <Text>{props.post.desc}</Text>
       <Flex flexDirection={"row"}>
         {isLiked ? (
           <IconButton
+            isDisabled={true}
+            marginStart={10}
+            padding="3"
             variant={"unstyled"}
             color="red.400"
             _hover={{
@@ -92,17 +101,22 @@ export default function Post(props) {
               color: "red.400",
               rounded: "full",
             }}
-            icon={<Icon as={BsHeartFill} onClick={onLikeHandler} />}
+            icon={<BsHeartFill />}
+            onClick={onLikeHandler}
           ></IconButton>
         ) : (
           <IconButton
+            isDisabled={true}
+            marginStart={10}
+            padding="3"
             variant={"unstyled"}
             _hover={{
               background: "#e8f5fe",
               color: "red.400",
               borderRadius: "25px",
             }}
-            icon={<Icon as={BsHeart} onClick={onLikeHandler} />}
+            icon={<BsHeart />}
+            onClick={onLikeHandler}
           ></IconButton>
         )}
         <Text marginTop={1.5}>{likes}</Text>
