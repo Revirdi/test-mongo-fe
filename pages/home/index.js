@@ -70,7 +70,7 @@ function Home(props) {
         <Sidebar />
 
         <Flex flexGrow={"0.4"} w="70%" flexDirection="column" marginInline={2}>
-          <PostBox user={props.user} />
+          <PostBox user={props.user} getPost={getPost} />
           {renderPost()}
         </Flex>
         <ProfileBox user={props.user} />
@@ -85,13 +85,13 @@ export async function getServerSideProps(context) {
 
     if (!session) return { redirect: { destination: "/login" } };
 
-    const { accessToken } = session.user;
+    const { accessToken, userId } = session.user;
 
-    const config = {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    };
+    // const config = {
+    //   headers: { Authorization: `Bearer ${accessToken}` },
+    // };
 
-    const res = await axiosInstance.get("/users/profile", config);
+    const res = await axiosInstance.get("/users/profile/" + userId);
     const getPost = await axiosInstance.get("/posts/timeline/all");
 
     return {

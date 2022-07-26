@@ -260,13 +260,13 @@ export async function getServerSideProps(context) {
 
     if (!session) return { redirect: { destination: "/login" } };
 
-    const { accessToken } = session.user;
+    const { accessToken, userId } = session.user;
 
-    const config = {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    };
+    // const config = {
+    //   headers: { Authorization: `Bearer ${accessToken}` },
+    // };
 
-    const res = await axiosInstance.get("/users/profile", config);
+    const res = await axiosInstance.get("/users/profile/" + userId);
 
     return {
       props: { user: res.data.data, session },
