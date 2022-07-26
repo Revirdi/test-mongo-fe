@@ -10,8 +10,12 @@ export default function PostBox(props) {
   const [user, setUser] = useState(props.user);
   const [desc, setDesc] = useState("");
   const [postImage, setPostImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { getPost } = props;
 
   const postHandler = async () => {
+    setIsLoading(true);
     const session = await getSession();
     const { accessToken } = session.user;
     const config = {
@@ -32,7 +36,10 @@ export default function PostBox(props) {
     }
     try {
       await axiosInstance.post("/posts", newPost, config);
-      window.location.reload();
+      setIsLoading(false);
+      setDesc("");
+      setPostImage(null);
+      getPost();
     } catch (error) {}
   };
 
@@ -88,6 +95,7 @@ export default function PostBox(props) {
           />
         </label>
         <Button
+          isLoading={isLoading}
           variant="solid"
           colorScheme="twitter"
           rounded="lg"
