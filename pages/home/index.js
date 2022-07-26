@@ -7,16 +7,22 @@ import axiosInstance from "../../services/axios";
 import Post from "../../components/Post";
 import ProfileBox from "../../components/ProfileBox";
 import PostBox from "../../components/PostBox";
+import InfiniteScroll from "react-infinite-scroller";
 
 function Home(props) {
   const [post, setPost] = useState(props.post);
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
     getPost();
-  }, []);
+  }, [page, pageSize]);
   const getPost = async () => {
-    const res = await axiosInstance.get("/posts/timeline/all");
+    const res = await axiosInstance.get("/posts/timeline/all", {
+      params: { page, pageSize },
+    });
     setPost(res.data.data);
   };
 
@@ -78,7 +84,19 @@ function Home(props) {
 
         <Flex flexGrow={"0.4"} w="70%" flexDirection="column" marginInline={2}>
           <PostBox user={props.user} getPost={getPost} />
+          {/* <InfiniteScroll
+            pageStart={0}
+            loadMore={getPost}
+            hasMore={hasMore}
+            loader={
+              <div className="loader" key={0}>
+                Loading ...
+              </div>
+            }
+          > */}
           {renderPost()}
+
+          {/* </InfiniteScroll> */}
         </Flex>
         <ProfileBox user={props.user} />
       </Flex>
@@ -97,9 +115,13 @@ export async function getServerSideProps(context) {
     // const config = {
     //   headers: { Authorization: `Bearer ${accessToken}` },
     // };
+    const page = 0;
+    const pageSize = 0;
 
     const res = await axiosInstance.get("/users/profile/" + userId);
-    const getPost = await axiosInstance.get("/posts/timeline/all");
+    const getPost = await axiosInstance.get("/posts/timeline/all", {
+      params: { page, pageSize },
+    });
 
     return {
       props: { user: res.data.data, post: getPost.data.data, session },
