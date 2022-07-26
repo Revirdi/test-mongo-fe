@@ -65,7 +65,6 @@ export default function Register() {
         return setErrorMessage(error.response.data.message);
       setErrorMessage(error.message);
     } finally {
-      // akan dijalankan di akhir, terlepas proses di try berhasil ataupun gagal lalu masuk ke catch
       setisRegisterProcess(false);
     }
   };

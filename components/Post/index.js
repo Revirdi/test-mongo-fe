@@ -12,7 +12,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import axiosInstance from "../../services/axios";
-// import { getSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import { api_origin } from "../../constraint";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import moment from "moment";
@@ -48,9 +48,18 @@ export default function Post(props) {
 
   const onLikeHandler = async () => {
     try {
-      await axiosInstance.put(`/posts/${post._id}`, {
-        userId: props.user._id,
-      });
+      const session = await getSession();
+      const { accessToken } = session.user;
+      const config = {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      };
+      await axiosInstance.put(
+        `/posts/${post._id}`,
+        {
+          userId: props.user._id,
+        },
+        config
+      );
     } catch (error) {}
     setLikes(isLiked ? likes - 1 : likes + 1);
     setIsLiked(!isLiked);

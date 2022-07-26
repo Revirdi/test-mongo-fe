@@ -32,7 +32,12 @@ export default function PostBox(props) {
       newPost.postImage = `/public/post/${fileName}`;
       try {
         await axiosInstance.post("/posts/upload", data, config);
-      } catch (error) {}
+      } catch (error) {
+        console.log({ Error });
+        return alert(error.response.data.message);
+      } finally {
+        setIsLoading(false);
+      }
     }
     try {
       await axiosInstance.post("/posts", newPost, config);
