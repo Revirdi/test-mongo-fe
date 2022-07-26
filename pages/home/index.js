@@ -33,7 +33,14 @@ function Home(props) {
 
   const renderPost = () => {
     return post.map((pst) => {
-      return <Post key={pst._id} post={pst} user={props.user}></Post>;
+      return (
+        <Post
+          key={pst._id}
+          post={pst}
+          user={props.user}
+          getPost={getPost}
+        ></Post>
+      );
     });
   };
 

@@ -5,17 +5,21 @@ import {
   Image,
   Flex,
   IconButton,
-  Icon,
   Spacer,
   Button,
-  Input,
   Textarea,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from "@chakra-ui/react";
+
 import axiosInstance from "../../services/axios";
 import { getSession } from "next-auth/react";
 import { api_origin } from "../../constraint";
-import { BsHeart, BsHeartFill } from "react-icons/bs";
+import { BsHeart, BsHeartFill, BsThreeDots, BsPencil } from "react-icons/bs";
 import moment from "moment";
+import { DeleteIcon } from "@chakra-ui/icons";
 
 export default function Post(props) {
   const [likes, setLikes] = useState(props.post.likes.length);
@@ -25,29 +29,56 @@ export default function Post(props) {
   const [editMode, setEditMode] = useState(false);
   const [post, setPost] = useState(props.post);
 
-  // const [user, setUser] = useState("");
+  const onDeleteHandler = async () => {
+    try {
+      if (!props.user.isVerified)
+        return alert("You need to verify your account");
+      const session = await getSession();
+      const { accessToken } = session.user;
+      const config = {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      };
+      const isDeleted = await axiosInstance.delete(
+        `/posts/${post._id}`,
+        config
+      );
+      alert(isDeleted.data.message);
+      props.getPost();
+    } catch (error) {
+      if (error.response.data) return alert(error.response.data.message);
+      alert(error.message);
+    }
+  };
 
-  // console.log(props.post.likes.includes(props.user._id));
-  // useEffect(() => {
-  //   setIsLiked(props.post.likes.includes(props.user.userId));
-  // }, [(props.user.userId, props.post.likes)]);
-
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     const session = await getSession();
-  //     const { accessToken } = session.user;
-
-  //     const config = {
-  //       headers: { Authorization: `Bearer ${accessToken}` },
-  //     };
-  //     const res = await axiosInstance.get(`/users/profile`, config);
-  //     setUser(res.data.data);
-  //   };
-  //   fetchUser();
-  // }, [props.user._id]);
+  const onEditHandler = async () => {
+    try {
+      if (!props.user.isVerified)
+        return alert("You need to verify your account");
+      const session = await getSession();
+      const { accessToken } = session.user;
+      const config = {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      };
+      const body = {
+        desc: post.desc,
+      };
+      const editPost = await axiosInstance.patch(
+        `/posts/update/${post._id}`,
+        body,
+        config
+      );
+      alert(editPost.data.message);
+      setEditMode(false);
+    } catch (error) {
+      if (error.response.data) return alert(error.response.data.message);
+      alert(error.message);
+    }
+  };
 
   const onLikeHandler = async () => {
     try {
+      if (!props.user.isVerified)
+        return alert("You need to verify your account");
       const session = await getSession();
       const { accessToken } = session.user;
       const config = {
@@ -92,12 +123,41 @@ export default function Post(props) {
             <Text marginStart={3} marginTop={3}>
               {moment(post.createdAt).fromNow()}
             </Text>
-            {post.postedBy._id === props.user._id && (
-              <>
-                <Spacer />
-                <Button onClick={() => setEditMode(!editMode)}>Edit</Button>
-              </>
-            )}
+
+            <Spacer />
+            {/* <Button onClick={() => setEditMode(!editMode)}>Edit</Button> */}
+            <Menu>
+              <MenuButton
+                as={IconButton}
+                aria-label="Options"
+                icon={<BsThreeDots />}
+                variant="ghost"
+              />
+              {post.postedBy._id === props.user._id && (
+                <MenuList>
+                  <MenuItem
+                    icon={<BsPencil />}
+                    onClick={() => {
+                      if (!props.user.isVerified)
+                        return alert("You need to verify your account");
+                      setEditMode(!editMode);
+                    }}
+                  >
+                    Edit
+                  </MenuItem>
+                  <MenuItem
+                    icon={<DeleteIcon />}
+                    onClick={() => {
+                      if (!props.user.isVerified)
+                        return alert("You need to verify your account");
+                      onDeleteHandler();
+                    }}
+                  >
+                    Delete
+                  </MenuItem>
+                </MenuList>
+              )}
+            </Menu>
           </Flex>
           <Text marginStart={12} marginBottom={2}>
             {post.desc}
@@ -164,12 +224,39 @@ export default function Post(props) {
             <Text marginStart={3} marginTop={2} fontSize="xl">
               @{post.postedBy.username}
             </Text>
-            {post.postedBy._id === props.user._id && (
-              <>
-                <Spacer />
-                <Button onClick={() => setEditMode(!editMode)}>Edit</Button>
-              </>
-            )}
+            <Spacer />
+            <Menu>
+              <MenuButton
+                as={IconButton}
+                aria-label="Options"
+                icon={<BsThreeDots />}
+                variant="ghost"
+              />
+              {post.postedBy._id === props.user._id && (
+                <MenuList>
+                  <MenuItem
+                    icon={<BsPencil />}
+                    onClick={() => {
+                      if (!props.user.isVerified)
+                        return alert("You need to verify your account");
+                      setEditMode(!editMode);
+                    }}
+                  >
+                    Edit
+                  </MenuItem>
+                  <MenuItem
+                    icon={<DeleteIcon />}
+                    onClick={() => {
+                      if (!props.user.isVerified)
+                        return alert("You need to verify your account");
+                      onDeleteHandler();
+                    }}
+                  >
+                    Delete
+                  </MenuItem>
+                </MenuList>
+              )}
+            </Menu>
           </Flex>
           <Textarea
             marginStart={12}
@@ -223,7 +310,7 @@ export default function Post(props) {
               <Text marginTop={1.5}>{likes}</Text>
             </Flex>
 
-            <Button marginTop="2" marginRight={8}>
+            <Button marginTop="2" marginRight={8} onClick={onEditHandler}>
               Save
             </Button>
           </Flex>

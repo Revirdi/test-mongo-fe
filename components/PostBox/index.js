@@ -11,10 +11,12 @@ export default function PostBox(props) {
   const [desc, setDesc] = useState("");
   const [postImage, setPostImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(!props.user.isVerified);
 
   const { getPost } = props;
 
   const postHandler = async () => {
+    if (!props.user.isVerified) return alert("You need to verify your account");
     setIsLoading(true);
     const session = await getSession();
     const { accessToken } = session.user;
@@ -65,6 +67,7 @@ export default function PostBox(props) {
         />
         <Textarea
           // maxLength="10"
+          isDisabled={isDisabled}
           variant="unstyled"
           width="90%"
           marginStart={4}
@@ -96,6 +99,7 @@ export default function PostBox(props) {
             style={{ display: "none" }}
             type="file"
             id="postImage"
+            disabled={isDisabled}
             onChange={(e) => setPostImage(e.target.files[0])}
           />
         </label>
