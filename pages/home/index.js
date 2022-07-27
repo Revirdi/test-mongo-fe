@@ -17,38 +17,32 @@ function Home(props) {
   const [hasMore, setHasMore] = useState(true);
   const [postLength, setPostLength] = useState(props.length);
 
-  // useEffect(() => {
-  //   getPost();
-  // }, []);
-
-  const isEmpty = !post || post.length === 0;
-
   const fetchMore = async () => {
-    setIsLoading(true);
+    setTimeout(async () => {
+      const res = await axiosInstance.get("/posts/timeline/all", {
+        params: { page: page + 1, pageSize },
+      });
 
-    const res = await axiosInstance.get("/posts/timeline/all", {
-      params: { page: page + 1, pageSize },
-    });
-
-    if (res) {
-      const newPost = [...post, ...res.data.data];
-
-      console.log(postLength);
-      console.log(newPost.length);
-      if (newPost.length >= postLength) {
-        setHasMore(false);
+      if (res) {
+        const newPost = [...post, ...res.data.data];
+        if (newPost.length >= postLength) {
+          setHasMore(false);
+        }
+        setPost(newPost);
+        setPage(page + 1);
       }
-      setPost(newPost);
-      setPage(page + 1);
-    }
-    setIsLoading(false);
+    }, 100);
   };
 
   const getPost = async () => {
     const res = await axiosInstance.get("/posts/timeline/all", {
-      params: { page: 1, pageSize: 0 },
+      params: { page: 1, pageSize },
     });
+
     setPost(res.data.data);
+    setPostLength(res.data.length);
+    setPage(1);
+    setHasMore(true);
   };
 
   const resendHandler = async () => {
@@ -110,13 +104,20 @@ function Home(props) {
         <Flex flexGrow={"0.4"} w="70%" flexDirection="column" marginInline={2}>
           <PostBox user={props.user} getPost={getPost} />
           <InfiniteScroll
-            pageStart={1}
+            pageStart={0}
             loadMore={fetchMore}
             hasMore={hasMore}
             loader={
-              <div className="loader" key={0}>
+              <Box
+                rounded={5}
+                boxShadow="md"
+                marginBottom={2}
+                padding="2"
+                marginInlineStart={"25%"}
+                key={0}
+              >
                 Loading ...
-              </div>
+              </Box>
             }
           >
             {renderPost()}

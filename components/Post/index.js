@@ -44,8 +44,8 @@ export default function Post(props) {
         config
       );
       alert(isDeleted.data.message);
-
-      window.location.reload(false);
+      props.getPost();
+      // window.location.reload(false);
     } catch (error) {
       if (error.response.data) return alert(error.response.data.message);
       alert(error.message);

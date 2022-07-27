@@ -42,11 +42,12 @@ export default function PostBox(props) {
       }
     }
     try {
-      await axiosInstance.post("/posts", newPost, config);
       setIsLoading(false);
+      await axiosInstance.post("/posts", newPost, config);
       setDesc("");
       setPostImage(null);
       getPost();
+      // window.location.reload(false);
     } catch (error) {}
   };
 
