@@ -33,6 +33,7 @@ export default function Post(props) {
     try {
       if (!props.user.isVerified)
         return alert("You need to verify your account");
+
       const session = await getSession();
       const { accessToken } = session.user;
       const config = {
@@ -43,7 +44,8 @@ export default function Post(props) {
         config
       );
       alert(isDeleted.data.message);
-      props.getPost();
+
+      window.location.reload(false);
     } catch (error) {
       if (error.response.data) return alert(error.response.data.message);
       alert(error.message);

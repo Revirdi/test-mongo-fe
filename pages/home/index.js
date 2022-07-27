@@ -11,17 +11,42 @@ import InfiniteScroll from "react-infinite-scroller";
 
 function Home(props) {
   const [post, setPost] = useState(props.post);
-  const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(0);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(3);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const [postLength, setPostLength] = useState(props.length);
 
-  useEffect(() => {
-    getPost();
-  }, [page, pageSize]);
+  // useEffect(() => {
+  //   getPost();
+  // }, []);
+
+  const isEmpty = !post || post.length === 0;
+
+  const fetchMore = async () => {
+    setIsLoading(true);
+
+    const res = await axiosInstance.get("/posts/timeline/all", {
+      params: { page: page + 1, pageSize },
+    });
+
+    if (res) {
+      const newPost = [...post, ...res.data.data];
+
+      console.log(postLength);
+      console.log(newPost.length);
+      if (newPost.length >= postLength) {
+        setHasMore(false);
+      }
+      setPost(newPost);
+      setPage(page + 1);
+    }
+    setIsLoading(false);
+  };
+
   const getPost = async () => {
     const res = await axiosInstance.get("/posts/timeline/all", {
-      params: { page, pageSize },
+      params: { page: 1, pageSize: 0 },
     });
     setPost(res.data.data);
   };
@@ -84,19 +109,18 @@ function Home(props) {
 
         <Flex flexGrow={"0.4"} w="70%" flexDirection="column" marginInline={2}>
           <PostBox user={props.user} getPost={getPost} />
-          {/* <InfiniteScroll
-            pageStart={0}
-            loadMore={getPost}
+          <InfiniteScroll
+            pageStart={1}
+            loadMore={fetchMore}
             hasMore={hasMore}
             loader={
               <div className="loader" key={0}>
                 Loading ...
               </div>
             }
-          > */}
-          {renderPost()}
-
-          {/* </InfiniteScroll> */}
+          >
+            {renderPost()}
+          </InfiniteScroll>
         </Flex>
         <ProfileBox user={props.user} />
       </Flex>
@@ -115,8 +139,8 @@ export async function getServerSideProps(context) {
     // const config = {
     //   headers: { Authorization: `Bearer ${accessToken}` },
     // };
-    const page = 0;
-    const pageSize = 0;
+    const page = 1;
+    const pageSize = 3;
 
     const res = await axiosInstance.get("/users/profile/" + userId);
     const getPost = await axiosInstance.get("/posts/timeline/all", {
@@ -124,7 +148,12 @@ export async function getServerSideProps(context) {
     });
 
     return {
-      props: { user: res.data.data, post: getPost.data.data, session },
+      props: {
+        user: res.data.data,
+        post: getPost.data.data,
+        length: getPost.data.length,
+        session,
+      },
     };
   } catch (error) {
     console.error(error.response.data);
