@@ -31,7 +31,7 @@ function Home(props) {
         setPost(newPost);
         setPage(page + 1);
       }
-    }, 100);
+    }, 500);
   };
 
   const getPost = async () => {
