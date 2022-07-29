@@ -12,6 +12,7 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  Link,
 } from "@chakra-ui/react";
 
 import axiosInstance from "../../services/axios";
@@ -20,6 +21,7 @@ import { api_origin } from "../../constraint";
 import { BsHeart, BsHeartFill, BsThreeDots, BsPencil } from "react-icons/bs";
 import moment from "moment";
 import { DeleteIcon } from "@chakra-ui/icons";
+import NextLink from "next/link";
 
 export default function Post(props) {
   const [likes, setLikes] = useState(props.post.likes.length);
@@ -45,9 +47,7 @@ export default function Post(props) {
       );
       alert(isDeleted.data.message);
       props.getPost();
-      // window.location.reload(false);
     } catch (error) {
-      if (error.response.data) return alert(error.response.data.message);
       alert(error.message);
     }
   };
@@ -161,17 +161,40 @@ export default function Post(props) {
               )}
             </Menu>
           </Flex>
-          <Text marginStart={12} marginBottom={2}>
-            {post.desc}
-          </Text>
-          {post.postImage && (
-            <Image
-              marginStart={12}
-              rounded="10"
-              src={api_origin + post.postImage}
-              maxHeight="400px"
-              width="90%"
-            ></Image>
+          {props.user.isVerified ? (
+            <NextLink href={`/post/${post._id}`}>
+              <Link variant="unstyle">
+                <Text marginStart={12} marginBottom={2}>
+                  {post.desc}
+                </Text>
+                {post.postImage && (
+                  <Image
+                    marginStart={12}
+                    rounded="10"
+                    src={api_origin + post.postImage}
+                    maxHeight="400px"
+                    width="90%"
+                  ></Image>
+                )}
+              </Link>
+            </NextLink>
+          ) : (
+            <NextLink href="#">
+              <Link variant="unstyle">
+                <Text marginStart={12} marginBottom={2}>
+                  {post.desc}
+                </Text>
+                {post.postImage && (
+                  <Image
+                    marginStart={12}
+                    rounded="10"
+                    src={api_origin + post.postImage}
+                    maxHeight="400px"
+                    width="90%"
+                  ></Image>
+                )}
+              </Link>
+            </NextLink>
           )}
           <Flex flexDirection={"row"}>
             {isLiked ? (

@@ -42,8 +42,8 @@ export default function PostBox(props) {
       }
     }
     try {
-      setIsLoading(false);
       await axiosInstance.post("/posts", newPost, config);
+      setIsLoading(false);
       setDesc("");
       setPostImage(null);
       getPost();

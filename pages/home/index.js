@@ -135,7 +135,7 @@ export async function getServerSideProps(context) {
 
     if (!session) return { redirect: { destination: "/login" } };
 
-    const { accessToken, userId } = session.user;
+    const { userId } = session.user;
 
     // const config = {
     //   headers: { Authorization: `Bearer ${accessToken}` },
@@ -158,8 +158,9 @@ export async function getServerSideProps(context) {
     };
   } catch (error) {
     console.error(error.response.data);
+    const { message } = error;
 
-    return { props: {} };
+    return { props: { message } };
   }
 }
 

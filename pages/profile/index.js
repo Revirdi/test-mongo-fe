@@ -89,10 +89,8 @@ export default function Profile(props) {
         headers: { Authorization: `Bearer ${accessToken}` },
       };
       const res = await axiosInstance.patch("/users/avatar", body, config);
-      console.log(res.data.result);
       setUser(res.data.result);
     } catch (error) {
-      console.log({ Error });
       alert(error.response.data.message);
     }
   };
@@ -256,7 +254,6 @@ export default function Profile(props) {
 export async function getServerSideProps(context) {
   try {
     const session = await getSession({ req: context.req });
-    // console.log(session.error);
 
     if (!session) return { redirect: { destination: "/login" } };
 
@@ -272,8 +269,10 @@ export async function getServerSideProps(context) {
       props: { user: res.data.data, session },
     };
   } catch (error) {
-    console.error(error.response?.data);
+    console.error(error.response.data);
+    console.log({ error });
+    const { message } = error;
 
-    return { props: {} };
+    return { props: { message } };
   }
 }
