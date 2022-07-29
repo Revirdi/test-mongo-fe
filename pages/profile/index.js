@@ -55,17 +55,18 @@ export default function Profile(props) {
   const onSaveProfileUpdate = async () => {
     try {
       const session = await getSession();
-      const { accessToken } = session.user;
+      const { accessToken, userId } = session.user;
       const config = {
         headers: { Authorization: `Bearer ${accessToken}` },
       };
-      await axiosInstance.patch(`/users/`, user, config);
-      alert("Success edit profile");
+      const lohe = await axiosInstance.patch(`/users/`, user, config);
+
       const resGetUserProfile = await axiosInstance.get(
-        "/users/profile",
+        `/users/profile/${userId}`,
         config
       );
 
+      console.log(resGetUserProfile);
       setUser(resGetUserProfile.data.data);
       setEditMode(false);
       window.location.reload();
@@ -80,6 +81,7 @@ export default function Profile(props) {
     setImageSource(URL.createObjectURL(event.target.files[0]));
   };
   const onSaveButton = async () => {
+    console.log("disiniguys");
     try {
       const session = await getSession();
       const { accessToken } = session.user;
@@ -90,6 +92,7 @@ export default function Profile(props) {
       };
       const res = await axiosInstance.patch("/users/avatar", body, config);
       setUser(res.data.result);
+      alert(res.data.message);
     } catch (error) {
       alert(error.response.data.message);
     }
