@@ -1,5 +1,6 @@
-import { Flex, Spacer, Text } from "@chakra-ui/react";
-function SidebarOption({ active, text, Icon }) {
+import { Flex, Text } from "@chakra-ui/react";
+function SidebarOption({ text, Icon, color }) {
+  console.log(color);
   return (
     <Flex
       flexGrow="0.3"

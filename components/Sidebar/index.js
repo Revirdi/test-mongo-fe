@@ -6,6 +6,9 @@ import {
   BsHash,
   BsBookmark,
   BsList,
+  BsFileEarmarkPerson,
+  BsHeartFill,
+  BsEmojiSmile,
 } from "react-icons/bs";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { IoMailOutline } from "react-icons/io5";
@@ -24,7 +27,6 @@ function Sidebar() {
       left={6}
       top={2}
     >
-      {/* Twitter Icon */}
       <Icon
         as={BsTwitter}
         fontSize="30px"
@@ -33,25 +35,27 @@ function Sidebar() {
         color="var(--twitter-color)"
       />
 
-      {/* Sidebar Option */}
       <NextLink href="/home" passHref>
         <Link style={{ textDecoration: "none" }}>
           <SidebarOption Icon={BsFillHouseDoorFill} text="Home" />
         </Link>
       </NextLink>
-      <SidebarOption Icon={BsHash} text="Explore" />
-      <SidebarOption Icon={IoIosNotificationsOutline} text="Notification" />
-      <SidebarOption Icon={IoMailOutline} text="Messages" />
-      <SidebarOption Icon={BsBookmark} text="Bookmarks" />
-      <SidebarOption Icon={BsList} text="List" />
       <NextLink href="/profile" passHref>
         <Link style={{ textDecoration: "none" }}>
-          <SidebarOption Icon={BsFillHouseDoorFill} text="Profile" />
+          <SidebarOption Icon={BsFileEarmarkPerson} text="Profile" />
         </Link>
       </NextLink>
-      <SidebarOption Icon={BsFillHouseDoorFill} text="More" />
+      <NextLink href="/post/likedPost" passHref>
+        <Link style={{ textDecoration: "none" }}>
+          <SidebarOption Icon={BsHeartFill} text="Liked Post" />
+        </Link>
+      </NextLink>
+      <NextLink href="/post/myPost" passHref>
+        <Link style={{ textDecoration: "none" }}>
+          <SidebarOption Icon={BsEmojiSmile} text="My Post" />
+        </Link>
+      </NextLink>
 
-      {/* Button -> Tweet */}
       <Button
         colorScheme="twitter"
         height="50px"
@@ -60,7 +64,7 @@ function Sidebar() {
         borderRadius="30px"
         fontWeight="700"
       >
-        Twitter
+        Cuiter
       </Button>
     </Box>
   );

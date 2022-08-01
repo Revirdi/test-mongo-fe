@@ -1,6 +1,5 @@
 import { Flex, Text, Image } from "@chakra-ui/react";
 import moment from "moment";
-import { useState } from "react";
 import { api_origin } from "../../constraint";
 
 export default function Comment(props) {

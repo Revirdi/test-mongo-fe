@@ -1,4 +1,4 @@
-import { Box, Text, Textarea, Button, Flex } from "@chakra-ui/react";
+import { Textarea, Button, Flex } from "@chakra-ui/react";
 import { getSession } from "next-auth/react";
 import { useState } from "react";
 import axiosInstance from "../../services/axios";

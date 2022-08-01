@@ -29,14 +29,6 @@ export default function Login() {
 
   const { data: session } = useSession();
   if (session) router.replace("/home");
-
-  // useEffect(() => {
-  //   redirect();
-  // });
-  // const redirect = async () => {
-  //   if (session) return router.push("/home");
-  // };
-
   const onLoginClick = async () => {
     setisLoginProcess(true);
     const res = await signIn("credentials", {

@@ -23,6 +23,7 @@ import { useSession } from "next-auth/react";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,13 +36,6 @@ export default function Register() {
 
   const { data: session } = useSession();
 
-  // useEffect(() => {
-  //   redirect();
-  // });
-
-  // const redirect = async () => {
-  //   if (session) await router.push("/home");
-  // };
   if (session) router.replace("/home");
 
   const onRegisterClick = async () => {
@@ -142,7 +136,7 @@ export default function Register() {
               <FormLabel>Re-Enter your password</FormLabel>
               <InputGroup>
                 <Input
-                  type={showPassword ? "text" : "password"}
+                  type={showPassword2 ? "text" : "password"}
                   value={password2}
                   placeholder="***********"
                   onChange={(event) => setPassword2(event.target.value)}
@@ -151,10 +145,10 @@ export default function Register() {
                   <Button
                     variant={"ghost"}
                     onClick={() =>
-                      setShowPassword((showPassword) => !showPassword)
+                      setShowPassword2((showPassword2) => !showPassword2)
                     }
                   >
-                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                    {showPassword2 ? <ViewIcon /> : <ViewOffIcon />}
                   </Button>
                 </InputRightElement>
               </InputGroup>

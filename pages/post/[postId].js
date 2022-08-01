@@ -75,13 +75,14 @@ export default function PostDetail(props) {
         <Head>
           <title>Cuiters</title>
           <meta name="Detail Post" content="Cuiters" />
-          <link rel="icon" href="/favicon.ico" />
+          <link rel="icon" href="/twitter.ico" />
         </Head>
 
         <Sidebar />
 
         <Flex flexGrow={"0.4"} w="70%" flexDirection="column" marginInline={2}>
           <Post key={post._id} post={post} user={props.user}></Post>
+
           <Box
             rounded={5}
             boxShadow="md"

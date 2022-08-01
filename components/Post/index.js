@@ -18,13 +18,20 @@ import {
 import axiosInstance from "../../services/axios";
 import { getSession } from "next-auth/react";
 import { api_origin } from "../../constraint";
-import { BsHeart, BsHeartFill, BsThreeDots, BsPencil } from "react-icons/bs";
+import {
+  BsHeart,
+  BsHeartFill,
+  BsThreeDots,
+  BsPencil,
+  BsChatRightText,
+} from "react-icons/bs";
 import moment from "moment";
 import { DeleteIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
 
 export default function Post(props) {
   const [likes, setLikes] = useState(props.post.likes.length);
+  const [comments, setComments] = useState(props.post.comments.length);
   const [isLiked, setIsLiked] = useState(
     props.post.likes.includes(props.user._id)
   );
@@ -46,7 +53,11 @@ export default function Post(props) {
         config
       );
       alert(isDeleted.data.message);
-      props.getPost();
+      if (props.getPost) {
+        props.getPost();
+      } else {
+        window.location.reload();
+      }
     } catch (error) {
       alert(error.message);
     }
@@ -125,9 +136,7 @@ export default function Post(props) {
             <Text marginStart={3} marginTop={3}>
               {moment(post.createdAt).fromNow()}
             </Text>
-
             <Spacer />
-            {/* <Button onClick={() => setEditMode(!editMode)}>Edit</Button> */}
             <Menu>
               <MenuButton
                 as={IconButton}
@@ -199,7 +208,6 @@ export default function Post(props) {
           <Flex flexDirection={"row"}>
             {isLiked ? (
               <IconButton
-                // isDisabled={true}
                 marginStart={10}
                 padding="3"
                 variant={"unstyled"}
@@ -214,7 +222,6 @@ export default function Post(props) {
               ></IconButton>
             ) : (
               <IconButton
-                // isDisabled={true}
                 marginStart={10}
                 padding="3"
                 variant={"unstyled"}
@@ -228,6 +235,22 @@ export default function Post(props) {
               ></IconButton>
             )}
             <Text marginTop={1.5}>{likes}</Text>
+            <NextLink href={`/post/${post._id}`}>
+              <Link variant="unstyle">
+                <IconButton
+                  marginStart={10}
+                  padding="3"
+                  variant={"unstyled"}
+                  _hover={{
+                    background: "#e8f5fe",
+                    color: "red.400",
+                    borderRadius: "25px",
+                  }}
+                  icon={<BsChatRightText />}
+                ></IconButton>
+              </Link>
+            </NextLink>
+            <Text marginTop={1.5}>{comments}</Text>
           </Flex>
         </Box>
       ) : (
@@ -304,7 +327,6 @@ export default function Post(props) {
             <Flex marginTop="2">
               {isLiked ? (
                 <IconButton
-                  // isDisabled={true}
                   marginStart={10}
                   padding="3"
                   variant={"unstyled"}
@@ -319,7 +341,6 @@ export default function Post(props) {
                 ></IconButton>
               ) : (
                 <IconButton
-                  // isDisabled={true}
                   marginStart={10}
                   padding="3"
                   variant={"unstyled"}
@@ -333,6 +354,22 @@ export default function Post(props) {
                 ></IconButton>
               )}
               <Text marginTop={1.5}>{likes}</Text>
+              <NextLink href={`/post/${post._id}`}>
+                <Link variant="unstyle">
+                  <IconButton
+                    marginStart={10}
+                    padding="3"
+                    variant={"unstyled"}
+                    _hover={{
+                      background: "#e8f5fe",
+                      color: "red.400",
+                      borderRadius: "25px",
+                    }}
+                    icon={<BsChatRightText />}
+                  ></IconButton>
+                </Link>
+              </NextLink>
+              <Text marginTop={1.5}>{comments}</Text>
             </Flex>
 
             <Button marginTop="2" marginRight={8} onClick={onEditHandler}>

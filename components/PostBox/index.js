@@ -47,7 +47,6 @@ export default function PostBox(props) {
       setDesc("");
       setPostImage(null);
       getPost();
-      // window.location.reload(false);
     } catch (error) {}
   };
 
@@ -67,7 +66,6 @@ export default function PostBox(props) {
           rounded="full"
         />
         <Textarea
-          // maxLength="10"
           isDisabled={isDisabled}
           variant="unstyled"
           width="90%"
@@ -81,7 +79,12 @@ export default function PostBox(props) {
         {postImage && (
           <Flex flexDirection="column">
             <CloseIcon onClick={() => setPostImage(null)} />
-            <Image src={URL.createObjectURL(postImage)} />
+            <Image
+              maxHeight="400px"
+              width="90%"
+              rounded="10"
+              src={URL.createObjectURL(postImage)}
+            />
           </Flex>
         )}
       </Flex>
