@@ -46,7 +46,7 @@ export default function Register() {
         username,
         email,
         password,
-        confirm: password2,
+        confirm_password: password2,
       };
       const res = await axiosInstance.post("/auth/register", body);
       setSuccessMessage(res.data.message);

@@ -21,6 +21,7 @@ function MyApp({ Component, pageProps }) {
           <Head>
             <title>Cuiters</title>
             <meta name="description" content="One stop best Sosmed probably" />
+            <link rel="icon" href="/twitter.ico" />
           </Head>
           <Component {...pageProps} />
         </ChakraProvider>

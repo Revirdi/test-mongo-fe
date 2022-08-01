@@ -237,21 +237,39 @@ export default function Post(props) {
               ></IconButton>
             )}
             <Text marginTop={1.5}>{likes}</Text>
-            <NextLink href={`/post/${post._id}`}>
-              <Link variant="unstyle">
-                <IconButton
-                  marginStart={10}
-                  padding="3"
-                  variant={"unstyled"}
-                  _hover={{
-                    background: "#e8f5fe",
-                    color: "red.400",
-                    borderRadius: "25px",
-                  }}
-                  icon={<BsChatRightText />}
-                ></IconButton>
-              </Link>
-            </NextLink>
+            {props.user.isVerified ? (
+              <NextLink href={`/post/${post._id}`}>
+                <Link variant="unstyle">
+                  <IconButton
+                    marginStart={10}
+                    padding="3"
+                    variant={"unstyled"}
+                    _hover={{
+                      background: "#e8f5fe",
+                      color: "red.400",
+                      borderRadius: "25px",
+                    }}
+                    icon={<BsChatRightText />}
+                  ></IconButton>
+                </Link>
+              </NextLink>
+            ) : (
+              <NextLink href={`#`}>
+                <Link variant="unstyle">
+                  <IconButton
+                    marginStart={10}
+                    padding="3"
+                    variant={"unstyled"}
+                    _hover={{
+                      background: "#e8f5fe",
+                      color: "red.400",
+                      borderRadius: "25px",
+                    }}
+                    icon={<BsChatRightText />}
+                  ></IconButton>
+                </Link>
+              </NextLink>
+            )}
             <Text marginTop={1.5}>{comments}</Text>
           </Flex>
         </Box>
@@ -358,21 +376,39 @@ export default function Post(props) {
                 ></IconButton>
               )}
               <Text marginTop={1.5}>{likes}</Text>
-              <NextLink href={`/post/${post._id}`}>
-                <Link variant="unstyle">
-                  <IconButton
-                    marginStart={10}
-                    padding="3"
-                    variant={"unstyled"}
-                    _hover={{
-                      background: "#e8f5fe",
-                      color: "red.400",
-                      borderRadius: "25px",
-                    }}
-                    icon={<BsChatRightText />}
-                  ></IconButton>
-                </Link>
-              </NextLink>
+              {props.user.isVerified ? (
+                <NextLink href={`/post/${post._id}`}>
+                  <Link variant="unstyle">
+                    <IconButton
+                      marginStart={10}
+                      padding="3"
+                      variant={"unstyled"}
+                      _hover={{
+                        background: "#e8f5fe",
+                        color: "red.400",
+                        borderRadius: "25px",
+                      }}
+                      icon={<BsChatRightText />}
+                    ></IconButton>
+                  </Link>
+                </NextLink>
+              ) : (
+                <NextLink href={`#`}>
+                  <Link variant="unstyle">
+                    <IconButton
+                      marginStart={10}
+                      padding="3"
+                      variant={"unstyled"}
+                      _hover={{
+                        background: "#e8f5fe",
+                        color: "red.400",
+                        borderRadius: "25px",
+                      }}
+                      icon={<BsChatRightText />}
+                    ></IconButton>
+                  </Link>
+                </NextLink>
+              )}
               <Text marginTop={1.5}>{comments}</Text>
             </Flex>
 
