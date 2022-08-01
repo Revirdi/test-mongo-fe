@@ -56,7 +56,6 @@ export default function Profile(props) {
         config
       );
 
-      console.log(resGetUserProfile);
       setUser(resGetUserProfile.data.data);
       setEditMode(false);
       window.location.reload();

@@ -42,13 +42,11 @@ export default function Register() {
       setErrorMessage("");
       setSuccessMessage("");
       setisRegisterProcess(true);
-      // check password
-      if (password != password2)
-        return setErrorMessage("password did not match");
       const body = {
         username,
         email,
-        password: password2,
+        password,
+        confirm: password2,
       };
       const res = await axiosInstance.post("/auth/register", body);
       setSuccessMessage(res.data.message);
