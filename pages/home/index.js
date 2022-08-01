@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import { Flex, Button, Box, Text, HStack, VStack } from "@chakra-ui/react";
 import { getSession } from "next-auth/react";

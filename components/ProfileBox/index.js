@@ -19,7 +19,10 @@ export default function ProfileBox(props) {
             width="40px"
             height="40px"
           />
-          <Text>{`@${props.user.username}`}</Text>
+          <Text
+            fontWeight={"medium"}
+            fontStyle="italic"
+          >{`@${props.user.username}`}</Text>
         </HStack>
         <Button onClick={onLogoutClick} variant="ghost" w="100%">
           Logout

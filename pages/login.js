@@ -103,14 +103,6 @@ export default function Login() {
             </InputGroup>
           </FormControl>
           <Stack spacing={6}>
-            <Stack
-              direction={{ base: "column", sm: "row" }}
-              align={"start"}
-              justify={"space-between"}
-            >
-              <Checkbox>Remember me</Checkbox>
-              <Link color={"blue.500"}>Forgot password?</Link>
-            </Stack>
             <Text>
               Don't have an account?{" "}
               <NextLink href="/register">

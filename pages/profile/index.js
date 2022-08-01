@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { getSession, signOut } from "next-auth/react";
+import { useState } from "react";
+import { getSession } from "next-auth/react";
 import Head from "next/head";
 import axiosInstance from "../../services/axios";
 import { api_origin } from "../../constraint";
@@ -13,6 +13,11 @@ import {
   Image,
   Button,
   Input,
+  Table,
+  Tbody,
+  Tr,
+  Td,
+  TableContainer,
 } from "@chakra-ui/react";
 import ProfileBox from "../../components/ProfileBox";
 
@@ -130,17 +135,47 @@ export default function Profile(props) {
                 src={imageSource}
                 width={200}
                 height={200}
+                objectFit={"cover"}
                 rounded="full"
+                marginBottom={2}
               />
               {user.firstName && (
-                <Text>{`${user.firstName} ${user.lastName}`}</Text>
+                <Text
+                  fontSize={"md"}
+                  fontFamily="cursive"
+                >{`${user.firstName} ${user.lastName}`}</Text>
               )}
-              <Text>{`@${user.username}`}</Text>
+              <Text fontSize={"md"}>{`@${user.username}`}</Text>
 
-              {user.bio && <Text marginBottom={5}>{user.bio}</Text>}
-              <Text>Username : {user.username}</Text>
-              <Text>Fullname : {`${user.firstName} ${user.lastName}`}</Text>
-              <Text>Email : {user.email}</Text>
+              {user.bio && (
+                <Text
+                  marginBottom={5}
+                  fontStyle="italic"
+                  fontWeight={"light"}
+                  fontSize="lg"
+                >
+                  {user.bio}
+                </Text>
+              )}
+              <TableContainer>
+                <Table variant="striped">
+                  <Tbody>
+                    <Tr>
+                      <Td>Username</Td>
+                      <Td>{user.username}</Td>
+                    </Tr>
+                    <Tr>
+                      <Td>Fullname</Td>
+                      <Td>{`${user.firstName} ${user.lastName}`}</Td>
+                    </Tr>
+                    <Tr>
+                      <Td>Email</Td>
+                      <Td>{user.email}</Td>
+                    </Tr>
+                  </Tbody>
+                </Table>
+              </TableContainer>
+
               <Button
                 isDisabled={!isDisabled}
                 marginTop={4}
@@ -161,74 +196,85 @@ export default function Profile(props) {
               <Image
                 src={imageSource}
                 width={200}
+                objectFit={"cover"}
                 height={200}
                 rounded="full"
+                marginBottom={2}
               />
               <input type="file" onChange={onFileChange} />
-              <Button onClick={onSaveButton}>Change profile image</Button>
-
-              <HStack marginBlockEnd={3}>
-                <Text>Bio : </Text>
-                <Input
-                  width="auto"
-                  name="bio"
-                  type="text"
-                  value={user.bio}
-                  variant="filled"
-                  mb={3}
-                  onChange={onHandleChange}
-                />
-              </HStack>
-              <HStack marginBlockEnd={3}>
-                <Text>Username : </Text>
-                <Input
-                  width="auto"
-                  name="username"
-                  type="text"
-                  value={user.username}
-                  variant="filled"
-                  mb={3}
-                  onChange={onHandleChange}
-                />
-              </HStack>
-              <HStack marginBlockEnd={3}>
-                <Text>Firstname : </Text>
-                <Input
-                  width="auto"
-                  name="firstName"
-                  type="text"
-                  value={user.firstName}
-                  variant="filled"
-                  mb={3}
-                  onChange={onHandleChange}
-                />
-              </HStack>
-              <HStack marginBlockEnd={3}>
-                <Text>Lastname : </Text>
-                <Input
-                  width="auto"
-                  name="lastName"
-                  type="text"
-                  value={user.lastName}
-                  variant="filled"
-                  mb={3}
-                  onChange={onHandleChange}
-                />
-              </HStack>
-              <HStack marginBlockEnd={3}>
-                <Text>Email : </Text>
-                <Input
-                  width="auto"
-                  name="email"
-                  type="text"
-                  disabled
-                  value={user.email}
-                  variant="filled"
-                  mb={3}
-                  onChange={onHandleChange}
-                />
-              </HStack>
-
+              <Button onClick={onSaveButton}>Change Profile Picture</Button>
+              <TableContainer marginBlock={5}>
+                <Table variant="unstyled">
+                  <Tbody>
+                    <Tr>
+                      <Td>Bio</Td>
+                      <Td>
+                        <Input
+                          width="full"
+                          name="bio"
+                          type="text"
+                          value={user.bio}
+                          variant="filled"
+                          onChange={onHandleChange}
+                        />
+                      </Td>
+                    </Tr>
+                    <Tr>
+                      <Td>Username</Td>
+                      <Td>
+                        <Input
+                          width="full"
+                          name="username"
+                          type="text"
+                          value={user.username}
+                          variant="filled"
+                          onChange={onHandleChange}
+                        />
+                      </Td>
+                    </Tr>
+                    <Tr>
+                      <Td>Firstname</Td>
+                      <Td>
+                        <Input
+                          width="full"
+                          name="firstName"
+                          type="text"
+                          value={user.firstName}
+                          variant="filled"
+                          onChange={onHandleChange}
+                        />
+                      </Td>
+                    </Tr>
+                    <Tr>
+                      <Td>Lastname</Td>
+                      <Td>
+                        <Input
+                          width="full"
+                          name="lastName"
+                          type="text"
+                          value={user.lastName}
+                          variant="filled"
+                          onChange={onHandleChange}
+                        />
+                      </Td>
+                    </Tr>
+                    <Tr>
+                      <Td>Email</Td>
+                      <Td>
+                        <Input
+                          width="full"
+                          name="email"
+                          type="text"
+                          disabled
+                          value={user.email}
+                          variant="filled"
+                          onChange={onHandleChange}
+                        />
+                      </Td>
+                    </Tr>
+                  </Tbody>
+                </Table>
+              </TableContainer>
               <Button onClick={onSaveProfileUpdate}>Save</Button>
             </Box>
           )}

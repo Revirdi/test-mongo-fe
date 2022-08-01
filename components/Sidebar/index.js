@@ -1,19 +1,14 @@
 import { Icon } from "@chakra-ui/icons";
-import { Button } from "@chakra-ui/react";
 import {
   BsTwitter,
   BsFillHouseDoorFill,
-  BsHash,
-  BsBookmark,
-  BsList,
   BsFileEarmarkPerson,
   BsHeartFill,
   BsEmojiSmile,
 } from "react-icons/bs";
-import { IoIosNotificationsOutline } from "react-icons/io";
-import { IoMailOutline } from "react-icons/io5";
+
 import SidebarOption from "./SidebarOption";
-import { Box, Link } from "@chakra-ui/react";
+import { Box, Link, Button } from "@chakra-ui/react";
 import NextLink from "next/link";
 function Sidebar() {
   return (

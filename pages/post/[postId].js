@@ -1,5 +1,5 @@
 import { getSession } from "next-auth/react";
-import { Flex, Button, Box, Text, HStack, VStack } from "@chakra-ui/react";
+import { Flex, Button, Box, VStack } from "@chakra-ui/react";
 import Head from "next/head";
 import { useState } from "react";
 import ProfileBox from "../../components/ProfileBox";
@@ -96,6 +96,7 @@ export default function PostDetail(props) {
               getComments={getComments}
             />
             {renderComment()}
+
             <Flex flexDirection="row-reverse" mt="2">
               {listComment.length < commentLength && (
                 <Button variant="link" onClick={showMoreHandler}>

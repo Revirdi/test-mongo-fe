@@ -1,7 +1,7 @@
 import Head from "next/head";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
-import { Flex, Button, Box, Text, HStack, VStack } from "@chakra-ui/react";
+import { Flex, Box, VStack } from "@chakra-ui/react";
 import { getSession } from "next-auth/react";
 import axiosInstance from "../../services/axios";
 import Post from "../../components/Post";
@@ -86,20 +86,6 @@ function Home(props) {
 
   return (
     <VStack>
-      <Box backgroundColor={"gray.100"} mt="2" rounded="12">
-        {!props.user.isVerified && (
-          <HStack paddingBlock="1" paddingInline="6">
-            <Text>Click to resend a verification and check your email</Text>
-            <Button
-              isLoading={isLoading}
-              backgroundColor={"yellow.300"}
-              onClick={resendHandler}
-            >
-              Resend
-            </Button>
-          </HStack>
-        )}
-      </Box>
       <Flex
         height="100vh"
         width="full"

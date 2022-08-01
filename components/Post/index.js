@@ -127,6 +127,7 @@ export default function Post(props) {
               src={api_origin + post.postedBy.profilePicture}
               height="45px"
               width="45px"
+              objectFit={"cover"}
               rounded={"full"}
               marginBottom={2}
             ></Image>
@@ -197,6 +198,7 @@ export default function Post(props) {
                   <Image
                     marginStart={12}
                     rounded="10"
+                    objectFit={"cover"}
                     src={api_origin + post.postImage}
                     maxHeight="400px"
                     width="90%"
@@ -266,6 +268,7 @@ export default function Post(props) {
               src={api_origin + post.postedBy.profilePicture}
               height="45px"
               width="45px"
+              objectFit={"cover"}
               rounded={"full"}
               marginBottom={2}
             ></Image>
@@ -318,6 +321,7 @@ export default function Post(props) {
             <Image
               marginStart={12}
               rounded="10"
+              objectFit={"cover"}
               src={api_origin + post.postImage}
               maxHeight="400px"
               width="90%"

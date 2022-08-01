@@ -63,6 +63,7 @@ export default function PostBox(props) {
           src={api_origin + user.profilePicture}
           width="40px"
           height="40px"
+          objectFit={"cover"}
           rounded="full"
         />
         <Textarea
