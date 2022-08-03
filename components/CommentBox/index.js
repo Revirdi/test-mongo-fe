@@ -39,6 +39,7 @@ export default function CommentBox(props) {
       await axiosInstance.post("/comments/", body, config);
       props.getComments();
       setCommentInput("");
+      window.location.reload(false);
     } catch (error) {}
   };
   return (
