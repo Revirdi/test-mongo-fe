@@ -145,7 +145,7 @@ export default function Post(props) {
                 icon={<BsThreeDots />}
                 variant="ghost"
               />
-              {post.postedBy._id === props.user._id && (
+              {post.postedBy._id === props.user._id ? (
                 <MenuList>
                   <MenuItem
                     icon={<BsPencil />}
@@ -158,6 +158,31 @@ export default function Post(props) {
                     Edit
                   </MenuItem>
                   <MenuItem
+                    icon={<DeleteIcon />}
+                    onClick={() => {
+                      if (!props.user.isVerified)
+                        return alert("You need to verify your account");
+                      onDeleteHandler();
+                    }}
+                  >
+                    Delete
+                  </MenuItem>
+                </MenuList>
+              ) : (
+                <MenuList>
+                  <MenuItem
+                    isDisabled={true}
+                    icon={<BsPencil />}
+                    onClick={() => {
+                      if (!props.user.isVerified)
+                        return alert("You need to verify your account");
+                      setEditMode(!editMode);
+                    }}
+                  >
+                    Edit
+                  </MenuItem>
+                  <MenuItem
+                    isDisabled={true}
                     icon={<DeleteIcon />}
                     onClick={() => {
                       if (!props.user.isVerified)
@@ -301,7 +326,7 @@ export default function Post(props) {
                 icon={<BsThreeDots />}
                 variant="ghost"
               />
-              {post.postedBy._id === props.user._id && (
+              {post.postedBy._id === props.user._id ? (
                 <MenuList>
                   <MenuItem
                     icon={<BsPencil />}
@@ -314,6 +339,31 @@ export default function Post(props) {
                     Edit
                   </MenuItem>
                   <MenuItem
+                    icon={<DeleteIcon />}
+                    onClick={() => {
+                      if (!props.user.isVerified)
+                        return alert("You need to verify your account");
+                      onDeleteHandler();
+                    }}
+                  >
+                    Delete
+                  </MenuItem>
+                </MenuList>
+              ) : (
+                <MenuList>
+                  <MenuItem
+                    isDisabled={true}
+                    icon={<BsPencil />}
+                    onClick={() => {
+                      if (!props.user.isVerified)
+                        return alert("You need to verify your account");
+                      setEditMode(!editMode);
+                    }}
+                  >
+                    Edit
+                  </MenuItem>
+                  <MenuItem
+                    isDisabled={true}
                     icon={<DeleteIcon />}
                     onClick={() => {
                       if (!props.user.isVerified)
