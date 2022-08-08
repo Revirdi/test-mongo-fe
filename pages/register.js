@@ -49,8 +49,9 @@ export default function Register() {
         confirm_password: password2,
       };
       const res = await axiosInstance.post("/auth/register", body);
-      setSuccessMessage(res.data.message);
-      setTimeout(() => router.push("/login"), 3000);
+      setSuccessMessage(
+        res.data.message + " Please check your email to verify"
+      );
     } catch (error) {
       if (error.response.data)
         return setErrorMessage(error.response.data.message);

@@ -9,6 +9,16 @@ export default function ProfileBox(props) {
   return (
     <Flex minWidth={"20vw"} marginLeft={6}>
       <Box position={"fixed"} top={2}>
+        {!props.user.isVerified && (
+          <Box
+            bgColor={"yellow.300"}
+            width="fit-content"
+            padding={2}
+            borderRadius="md"
+          >
+            <Text fontWeight={"semibold"}>Unverified!</Text>
+          </Box>
+        )}
         <HStack mb={2}>
           <Image
             marginTop={2}
