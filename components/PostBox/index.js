@@ -105,6 +105,7 @@ export default function PostBox(props) {
             type="file"
             id="postImage"
             disabled={isDisabled}
+            value={""}
             onChange={(e) => setPostImage(e.target.files[0])}
           />
         </label>

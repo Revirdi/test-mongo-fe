@@ -18,6 +18,7 @@ import {
   Tr,
   Td,
   TableContainer,
+  Spacer,
 } from "@chakra-ui/react";
 import ProfileBox from "../../components/ProfileBox";
 
@@ -174,15 +175,17 @@ export default function Profile(props) {
                   </Tbody>
                 </Table>
               </TableContainer>
-
-              <Button
-                isDisabled={!isDisabled}
-                marginTop={4}
-                onClick={() => setEditMode(true)}
-                width="fit-content"
-              >
-                Edit Profile
-              </Button>
+              <Flex flexDirection="row-reverse">
+                <Button
+                  isDisabled={!isDisabled}
+                  marginTop={4}
+                  colorScheme="linkedin"
+                  onClick={() => setEditMode(true)}
+                  width="fit-content"
+                >
+                  Edit Profile
+                </Button>
+              </Flex>
             </Box>
           ) : (
             <Box
@@ -200,7 +203,7 @@ export default function Profile(props) {
                 rounded="full"
                 marginBottom={2}
               />
-              <input type="file" onChange={onFileChange} />
+              <input type="file" value={""} onChange={onFileChange} />
               <Button onClick={onSaveButton}>Change Profile Picture</Button>
               <TableContainer marginBlock={5}>
                 <Table variant="unstyled">
@@ -274,7 +277,18 @@ export default function Profile(props) {
                   </Tbody>
                 </Table>
               </TableContainer>
-              <Button onClick={onSaveProfileUpdate}>Save</Button>
+              <Flex flexDirection="row-reverse">
+                <Button
+                  colorScheme="linkedin"
+                  marginLeft={5}
+                  onClick={onSaveProfileUpdate}
+                >
+                  Save
+                </Button>
+                <Button colorScheme="red" onClick={() => setEditMode(false)}>
+                  Cancel
+                </Button>
+              </Flex>
             </Box>
           )}
         </Flex>
